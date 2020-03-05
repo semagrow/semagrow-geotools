@@ -19,7 +19,7 @@ do
   I=`echo $FILE | sed 's/dump.//g' | sed 's/.nt//g'`
   ENDPOINT="http://invekos-$I.default.svc.cluster.local:8080/strabon/Query"
   PREFIXES="$PREFIXESDIR/invekosPrefixes.txt"
-  $SEVOD_SCRAPER geordfdump $FILE $ENDPOINT $PREFIXES /dev/null /dev/null $FILE.ttl
+  $SEVOD_SCRAPER geordfdump $FILE $ENDPOINT $PREFIXES $FILE.ttl
 done
 
 FNAME="metadata.ttl"
@@ -27,8 +27,7 @@ FNAME="metadata.ttl"
 rm $FNAME
 touch $FNAME
 
-cat $DATASET.*.ttl | grep "^@prefix" | sort | uniq >> $FNAME
-cat $DATASET.*.ttl | grep "rdfs:subPropertyOf" | sort | uniq >> $FNAME
-cat $DATASET.*.ttl | grep -v "^@prefix" | grep -v "rdfs:subPropertyOf" >> $FNAME
+cat $DATASET.*.nt.ttl | grep "^@prefix" | sort | uniq >> $FNAME
+cat $DATASET.*.nt.ttl | grep -v "^@prefix" >> $FNAME
 
-rm $DATASET.*.ttl
+rm $DATASET.*.nt.ttl

@@ -1,4 +1,0 @@
-http://geo.linkedopendata.gr/corine/ontology#hasGeometry
-http://geo.linkedopendata.gr/gag/ontology/hasGeometry
-http://linkedgeodata.org/ontology/hasGeometry
-http://www.geonames.org/ontology#hasGeometry

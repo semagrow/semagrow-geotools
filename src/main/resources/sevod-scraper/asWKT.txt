@@ -1,4 +1,0 @@
-http://geo.linkedopendata.gr/corine/ontology#asWKT
-http://geo.linkedopendata.gr/gag/ontology/asWKT
-http://linkedgeodata.org/ontology/asWKT
-http://www.geonames.org/ontology#asWKT
