@@ -9,8 +9,8 @@ import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
+import org.eclipse.rdf4j.rio.helpers.AbstractRDFHandler;
 import org.eclipse.rdf4j.rio.helpers.BasicParserSettings;
-import org.eclipse.rdf4j.rio.helpers.RDFHandlerBase;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.io.ParseException;
@@ -21,7 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class BoundingBoxExtractor extends RDFHandlerBase {
+public class BoundingBoxExtractor extends AbstractRDFHandler {
 
     private final GeometryFactory gf = new GeometryFactory();
 
