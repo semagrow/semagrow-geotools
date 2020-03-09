@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: /sg/
+spec:
+  selector:
+    app: /sg/
+  ports:
+  - name: /sg/-ui
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: /sg/
+  labels:
+    app: /sg/
+spec:
+  selector:
+    matchLabels:
+      app: /sg/
+  template:
+    metadata:
+      labels:
+        app: /sg/
+    spec:
+      containers:
+      - name: semagrow
+        image: antru6/semagrow:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /etc/default/semagrow/
+          name: metadata
+      volumes:
+      - name: metadata
+        hostPath:
+          path: /root/semagrow//sg/
+          type: Directory
+      nodeName: node6

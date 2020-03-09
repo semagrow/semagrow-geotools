@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: /inv/
+spec:
+  selector:
+    app: /inv/
+  ports:
+  - name: /inv/-ui
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: /inv/
+  labels:
+    app: /inv/
+spec:
+  selector:
+    matchLabels:
+      app: /inv/
+  template:
+    metadata:
+      labels:
+        app: /inv/
+    spec:
+      containers:
+      - name: postgis
+        image: bde2020/postgis
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5432
+      - name: strabon
+        image: antru6/strabon
+        imagePullPolicy: Always
+        env:
+        - name: DOWNLOAD_URL
+          value: "http://estia.default.svc.cluster.local/dumps//inv/.tar.gz"
+        - name: DATASET_NAME
+          value: "/inv/"
+        - name: STRABON_CONNECTION_hostname
+          value: "localhost"
+        - name: STRABON_CONNECTION_port
+          value: "5432"
+        ports:
+        - containerPort: 8080
+
