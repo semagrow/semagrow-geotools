@@ -66,7 +66,7 @@ public class DatasetPartitioner extends AbstractRDFHandler {
                 Geometry geometry = WktHelpers.createGeometry(wkt, crs);
                 int bucket = 0;
                 for (Geometry partition: partitions) {
-                    if (geometry.getCentroid().coveredBy(partition)) {
+                    if (isMemberOfPartition(geometry, partition)) {
                         writer.handleStatement(statement, bucket);
 
                         if (waitingForWKT.containsKey(statement.getSubject())) {
@@ -99,6 +99,10 @@ public class DatasetPartitioner extends AbstractRDFHandler {
         }
 
         writer.handleStatement(statement, partitions.size());
+    }
+
+    protected boolean isMemberOfPartition(Geometry geometry, Geometry partition) {
+        return geometry.getCentroid().coveredBy(partition);
     }
 
     public static void main(String args[]) throws IOException, ParseException {

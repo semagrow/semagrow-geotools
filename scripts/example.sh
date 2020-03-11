@@ -7,6 +7,7 @@
 ./partitionDataset.sh /home/antru/Documents/xearth/lucasdemo/dumps/invekos.nt /home/antru/workspace/semagrow-geotools/src/main/resources/AustriaMBB.txt 3 5 /home/antru/Documents/xearth/invekos/3x5
 ./partitionDataset.sh /home/antru/Documents/xearth/lucasdemo/dumps/invekos.nt /home/antru/workspace/semagrow-geotools/src/main/resources/AustriaMBB.txt 4 5 /home/antru/Documents/xearth/invekos/4x5
 ./partitionDataset.sh /home/antru/Documents/xearth/lucasdemo/dumps/invekos.nt /home/antru/workspace/semagrow-geotools/src/main/resources/AustriaMBB.txt 4 6 /home/antru/Documents/xearth/invekos/4x6
+./partitionDatasetADM.sh /home/antru/Documents/xearth/lucasdemo/dumps/invekos.nt /home/antru/Documents/xearth/invekos/adm
 
 ./scrapeForMetadata.sh /home/antru/Documents/xearth/invekos/2x2
 ./scrapeForMetadata.sh /home/antru/Documents/xearth/invekos/2x3

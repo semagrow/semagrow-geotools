@@ -34,6 +34,11 @@ public class AdmDatasetPartitioner extends DatasetPartitioner {
         this.writer = writer;
     }
 
+    @Override
+    protected boolean isMemberOfPartition(Geometry geometry, Geometry partition) {
+        return partition.contains(geometry);
+    }
+
     public static void main(String args[]) throws IOException, ParseException {
         String usage = "USAGE:" +
                 "\n\t java " + DatasetPartitioner.class + " [inputFile] [outputDir]" +
