@@ -26,7 +26,7 @@ public final class Queries {
         String LINE3 = "LINESTRING EMPTY";
         String POLYGON = "POLYGON EMPTY";
 
-        try (InputStream input = Queries.class.getResourceAsStream("givenWKTs.properties")) {
+        try (InputStream input = Queries.class.getResourceAsStream("geographica/givenWKTs.properties")) {
 
             Properties prop = new Properties();
             prop.load(input);

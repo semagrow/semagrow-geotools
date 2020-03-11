@@ -24,17 +24,17 @@ import java.util.*;
 
 public class DatasetPartitioner extends AbstractRDFHandler {
 
-    private final static ValueFactory vf;
+    protected final static ValueFactory vf;
 
     static {
         vf = SimpleValueFactory.getInstance();
     }
 
-    private IRI crs = null;
+    protected IRI crs = null;
     private IRI HAS_GEOMETRY = vf.createIRI(GEO.NAMESPACE, "hasGeometry");
 
-    private List<Geometry> partitions;
-    private MultiRDFFileWriter writer;
+    protected List<Geometry> partitions;
+    protected MultiRDFFileWriter writer;
 
     private Map<Resource,Statement> waitingForWKT = new HashMap<>();
     private Map<Resource,Integer> waitingForHasGeom = new HashMap<>();
