@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: experiment
+  labels:
+    app: experiment
+spec:
+  containers:
+    - name: experiment
+      image: antru6/invekos-experiment
+      imagePullPolicy: Always
+      env:
+        - name: STRABON_ENDPOINTS
+          value: "invekos"
+        - name: SEMAGROW_ENDPOINTS
+            value: "semagrow-2x2,semagrow-2x3,semagrow-4x5"
+        - name: TIMES_TO_RUN
+          value: "5"
+  restartPolicy: OnFailure

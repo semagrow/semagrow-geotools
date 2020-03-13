@@ -13,8 +13,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Experiment {
 
@@ -37,11 +36,10 @@ public class Experiment {
     public void run() throws IOException {
 
         writer = new FileWriter(writerPath);
+        writer.write("Endpoint,Query,ExecTime,WaitTime,Results");
 
         for (String endpoint: endpoints) {
             runQueries(endpoint, false);
-        }
-        for (String endpoint: endpoints) {
             runQueries(endpoint, true);
         }
 
@@ -50,53 +48,42 @@ public class Experiment {
 
     private void runQueries(String endpoint, boolean thematic) throws IOException {
 
+        String equalsPolygon = "equalsPolygon";
+        String containsPoint = "containsPoint";
+        String hasLeDistance = "hasLeDistance";
+        String withinPolygon = "withinPolygon";
+
+        QueryInfo equalsPolygonQuery = new QueryInfo(endpoint, equalsPolygon, thematic);
+        QueryInfo containsPointQuery = new QueryInfo(endpoint, containsPoint, thematic);
+        QueryInfo hasLeDistanceQuery = new QueryInfo(endpoint, hasLeDistance, thematic);
+        QueryInfo withinPolygonQuery = new QueryInfo(endpoint, withinPolygon, thematic);
+
         Repository repo = new SPARQLRepository(endpoint);
         repo.init();
 
         log.info("Using endpoint: " + endpoint);
 
-        int id;
-
-        id=0;
-
-        for (String g: PropertiesHelpers.getSystemStringProperties(propFile, "INV_POLYGON")) {
-            String qID = endpoint + "," + "equalsPolygon" + id + "," + thematic;
-            runQuery(repo, Queries.equalsPolygonQuery(g, thematic), qID);
-            id++;
-            break;
+        for (String g : PropertiesHelpers.getSystemStringProperties(propFile, "INV_POLYGON")) {
+            RunInfo info = runQuery(repo, Queries.equalsPolygonQuery(g, thematic));
+            writer.write(equalsPolygonQuery.serailize() + "," + info.serailize());
         }
-
-        id=0;
-
-        for (String g: PropertiesHelpers.getSystemStringProperties(propFile, "INNER_POINT")) {
-            String qID = endpoint + "," + "containsPoint" + id + "," + thematic;
-            runQuery(repo, Queries.containsPointQuery(g, thematic), qID);
-            id++;
-            break;
+        for (String g : PropertiesHelpers.getSystemStringProperties(propFile, "INNER_POINT")) {
+            RunInfo info = runQuery(repo, Queries.containsPointQuery(g, thematic));
+            writer.write(containsPointQuery.serailize() + "," + info.serailize());
         }
-
-        id=0;
-
-        for (String g: PropertiesHelpers.getSystemStringProperties(propFile, "LUCAS_POINT")) {
-            String qID = endpoint + "," + "hasDistance" + id + "," + thematic;
-            runQuery(repo, Queries.hasDistanceQuery(g, thematic), qID);
-            id++;
-            break;
+        for (String g : PropertiesHelpers.getSystemStringProperties(propFile, "LUCAS_POINT")) {
+            RunInfo info = runQuery(repo, Queries.hasDistanceQuery(g, thematic));
+            writer.write(hasLeDistanceQuery.serailize() + "," + info.serailize());
         }
-
-        id=0;
-
-        for (String g: PropertiesHelpers.getSystemStringProperties(propFile, "AUSTRIA_ADM")) {
-            String qID = endpoint + "," + "withinPolygon" + id + "," + thematic;
-            runQuery(repo, Queries.withinPolygon(g, thematic), qID);
-            id++;
-            break;
+        for (String g : PropertiesHelpers.getSystemStringProperties(propFile, "AUSTRIA_ADM")) {
+            RunInfo info = runQuery(repo, Queries.withinPolygon(g, thematic));
+            writer.write(withinPolygonQuery.serailize() + "," + info.serailize());
         }
 
         repo.shutDown();
     }
 
-    private void runQuery(Repository repo, String qStr, String idStr) throws IOException {
+    private RunInfo runQuery(Repository repo, String qStr) {
 
         Long t1, t2, t3;
         int results = 0;
@@ -106,7 +93,7 @@ public class Experiment {
         t1 = System.currentTimeMillis();
         t2 = t1;
 
-        log.info("Executing query: " + qStr);
+        log.info("Executing query: " + qStr.replace("\n"," "));
 
         TupleQuery query = conn.prepareTupleQuery(qStr);
         TupleQueryResult result = query.evaluate();
@@ -129,7 +116,37 @@ public class Experiment {
         log.info("Query Waiting Time: " + queryWaitTime + " ms");
         log.info("Found " + results + " results.");
 
-        writer.write( idStr + "," + queryExecTime + "," + queryWaitTime + "," + results + "\n");
+        return new RunInfo(queryExecTime, queryWaitTime, results);
+    }
+
+    private class QueryInfo {
+        public String endoint;
+        public String queryDesc;
+        public boolean thematic;
+
+        public QueryInfo(String endoint, String queryDesc, boolean thematic) {
+            this.endoint = endoint;
+            this.queryDesc = queryDesc;
+            this.thematic = thematic;
+        }
+        public String serailize() {
+            return endoint + "," + queryDesc + "," + thematic;
+        }
+    }
+
+    private class RunInfo {
+        public long queryExecTime;
+        public long queryWaitTime;
+        public int results;
+
+        public RunInfo(long queryExecTime, long queryWaitTime, int results) {
+            this.queryExecTime = queryExecTime;
+            this.queryWaitTime = queryWaitTime;
+            this.results = results;
+        }
+        public String serailize() {
+            return queryWaitTime + "," + queryWaitTime + "," + results;
+        }
     }
 
     private static Set<String> fileToSetOfStrings(String path) throws IOException {
