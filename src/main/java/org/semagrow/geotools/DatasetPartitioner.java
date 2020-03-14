@@ -68,7 +68,7 @@ public class DatasetPartitioner extends AbstractRDFHandler {
                 for (Geometry partition: partitions) {
                     if (isMemberOfPartition(geometry, partition)) {
                         writer.handleStatement(statement, bucket);
-
+                        /*
                         if (waitingForWKT.containsKey(statement.getSubject())) {
                             writer.handleStatement(waitingForWKT.get(statement.getSubject()), bucket);
                             waitingForWKT.remove(statement.getSubject());
@@ -76,6 +76,7 @@ public class DatasetPartitioner extends AbstractRDFHandler {
                         else {
                             waitingForHasGeom.put(statement.getSubject(), bucket);
                         }
+                        */
                         return;
                     }
                     bucket++;
@@ -86,7 +87,7 @@ public class DatasetPartitioner extends AbstractRDFHandler {
                 throw new RDFHandlerException(e);
             }
         }
-
+        /*
         if (statement.getPredicate().equals(HAS_GEOMETRY)) {
             if (waitingForHasGeom.containsKey(statement.getObject())) {
                 writer.handleStatement(statement, waitingForHasGeom.get(statement.getObject()));
@@ -97,7 +98,7 @@ public class DatasetPartitioner extends AbstractRDFHandler {
             }
             return;
         }
-
+        */
         writer.handleStatement(statement, partitions.size());
     }
 
