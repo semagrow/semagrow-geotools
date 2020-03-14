@@ -13,13 +13,13 @@ public final class Queries {
             "  ?s invekos:hasDescription ?desc .\n" +
             "  ?s invekos:hasCropTypeNumber ?ct_number .\n" +
             "  ?s invekos:hasCropTypeName ?ct_name .\n" +
-            "  ?s invekos:hasArea ?area .\n";
+            "  ?s invekos:hasArea ?area .\n" +
+            "  ?s geo:hasGeometry ?g .\n";
 
     public static String equalsPolygonQuery(String polygon, boolean thematic) {
         return prefixes_str +
                 "SELECT * WHERE {\n" +
                 ((thematic) ? thematic_str : "") +
-                "  ?s geo:hasGeometry ?g .\n" +
                 "  ?g geo:asWKT ?o .\n" +
                 "  FILTER(geof:sfEquals(?o, \"" + polygon + "\"^^geo:wktLiteral))\n" +
                 "}";
@@ -29,7 +29,6 @@ public final class Queries {
         return prefixes_str +
                 "SELECT * WHERE {\n" +
                 ((thematic) ? thematic_str : "") +
-                "  ?s geo:hasGeometry ?g .\n" +
                 "  ?g geo:asWKT ?o .\n" +
                 "  FILTER(geof:sfContains(?o, \"" + point + "\"^^geo:wktLiteral))\n" +
                 "}";
@@ -39,17 +38,15 @@ public final class Queries {
         return prefixes_str +
                 "SELECT * WHERE {\n" +
                 ((thematic) ? thematic_str : "") +
-                "  ?s geo:hasGeometry ?g .\n" +
                 "  ?g geo:asWKT ?o .\n" +
                 "  FILTER(geof:distance(?o, \"" + point + "\"^^geo:wktLiteral, opengis:metre) < 10)\n" +
                 "}";
     }
 
-    public static String withinPolygon(String polygon, boolean thematic) {
+    public static String withinPolygonQuery(String polygon, boolean thematic) {
         return prefixes_str +
                 "SELECT * WHERE {\n" +
                 ((thematic) ? thematic_str : "") +
-                "  ?s geo:hasGeometry ?g .\n" +
                 "  ?g geo:asWKT ?o .\n" +
                 "  FILTER(geof:sfWithin(?o, \"" + polygon + "\"^^geo:wktLiteral))\n" +
                 "}";
