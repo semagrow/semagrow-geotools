@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: exp-thm-/id/
+  labels:
+    app: exp-thm-/id/
+spec:
+  containers:
+    - name: exp-thm-/id/
+      image: semagrow/kobe-evaluator
+      imagePullPolicy: Always
+      env:
+        - name: ENDPOINT
+          value: "http://semagrow-/id/.default.svc.cluster.local:8080/SemaGrow/sparql"
+        - name: TIMEOUT
+          value: "600000"
+        - name: EVAL_RUNS
+          value: "5"
+      volumeMounts:
+        - mountPath: /etc/querySet
+          name: queryset
+  volumes:
+    - name: queryset
+      hostPath:
+        path: /root/invekos/querySetThematic
+        type: Directory
+  nodeName: node1
+  restartPolicy: OnFailure

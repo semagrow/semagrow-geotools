@@ -25,10 +25,10 @@
 ./compressDumps.sh /home/antru/Documents/xearth/invekos/4x5/ invekos-4x5
 ./compressDumps.sh /home/antru/Documents/xearth/invekos/4x6/ invekos-4x6
 
-./createYamlFiles.sh /home/antru/Documents/xearth/invekos/2x2/ 2x2
-./createYamlFiles.sh /home/antru/Documents/xearth/invekos/2x3/ 2x3
-./createYamlFiles.sh /home/antru/Documents/xearth/invekos/3x3/ 3x3
-./createYamlFiles.sh /home/antru/Documents/xearth/invekos/3x4/ 3x4
-./createYamlFiles.sh /home/antru/Documents/xearth/invekos/3x5/ 3x5
-./createYamlFiles.sh /home/antru/Documents/xearth/invekos/4x5/ 4x5
-./createYamlFiles.sh /home/antru/Documents/xearth/invekos/4x6/ 4x6
+./createYamlFiles.sh /home/antru/Documents/xearth/invekos/2x2/ 2x2 4
+./createYamlFiles.sh /home/antru/Documents/xearth/invekos/2x3/ 2x3 6
+./createYamlFiles.sh /home/antru/Documents/xearth/invekos/3x3/ 3x3 9
+./createYamlFiles.sh /home/antru/Documents/xearth/invekos/3x4/ 3x4 12
+./createYamlFiles.sh /home/antru/Documents/xearth/invekos/3x5/ 3x5 15
+./createYamlFiles.sh /home/antru/Documents/xearth/invekos/4x5/ 4x5 20
+./createYamlFiles.sh /home/antru/Documents/xearth/invekos/4x6/ 4x6 24

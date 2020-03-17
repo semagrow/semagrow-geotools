@@ -33,29 +33,29 @@ public class Experiment {
 
         i=0;
         for (String g : PropertiesHelpers.getSystemStringProperties(propFile, "INV_POLYGON")) {
-            writeQuery(equalsPolygon + i, Queries.equalsPolygonQuery(g, false));
-            writeQuery(equalsPolygon + thematic + i, Queries.equalsPolygonQuery(g, false));
+            writeQuery("1" + equalsPolygon + i, Queries.equalsPolygonQuery(g, false));
+            writeQuery("1" + equalsPolygon + thematic + i, Queries.equalsPolygonQuery(g, true));
             i++;
         }
 
         i=0;
         for (String g : PropertiesHelpers.getSystemStringProperties(propFile, "INNER_POINT")) {
-            writeQuery(containsPoint + i, Queries.containsPointQuery(g, false));
-            writeQuery(containsPoint + thematic + i, Queries.containsPointQuery(g, false));
+            writeQuery("2" + containsPoint + i, Queries.containsPointQuery(g, false));
+            writeQuery("2" + containsPoint + thematic + i, Queries.containsPointQuery(g, true));
             i++;
         }
 
         i=0;
         for (String g : PropertiesHelpers.getSystemStringProperties(propFile, "LUCAS_POINT")) {
-            writeQuery(hasLeDistance + i, Queries.hasDistanceQuery(g, false));
-            writeQuery(hasLeDistance + thematic + i, Queries.hasDistanceQuery(g, false));
+            writeQuery("3" + hasLeDistance + i, Queries.hasDistanceQuery(g, false));
+            writeQuery("3" + hasLeDistance + thematic + i, Queries.hasDistanceQuery(g, true));
             i++;
         }
 
         i=0;
         for (String g : PropertiesHelpers.getSystemStringProperties(propFile, "AUSTRIA_ADM")) {
-            writeQuery(withinPolygon + i, Queries.withinPolygonQuery(g, false));
-            writeQuery(withinPolygon + thematic + i, Queries.withinPolygonQuery(g, false));
+            writeQuery("4" + withinPolygon + i, Queries.withinPolygonQuery(g, false));
+            writeQuery("4" + withinPolygon + thematic + i, Queries.withinPolygonQuery(g, true));
             i++;
         }
     }
@@ -78,7 +78,7 @@ public class Experiment {
         }
 
         Experiment experiment = new Experiment();
-        experiment.setOutputDirPath("/tmp/querySet");
+        experiment.setOutputDirPath(args[0]);
         experiment.writeQueries();
     }
 
