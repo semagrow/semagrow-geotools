@@ -14,6 +14,7 @@ public final class WktHelpers {
 
     private static WKTReader wktReader;
     private static WKTWriter wktWriter;
+    private static IRI DEFAULT_CRS;
 
     private static ValueFactory vf;
 
@@ -21,6 +22,7 @@ public final class WktHelpers {
         wktReader = new WKTReader();
         wktWriter = new WKTWriter();
         vf = SimpleValueFactory.getInstance();
+        DEFAULT_CRS = vf.createIRI("http://www.opengis.net/def/crs/EPSG/0/4326");
     }
 
     public static final IRI getCRS(Literal l) {
@@ -33,7 +35,7 @@ public final class WktHelpers {
             return vf.createIRI(str.substring(1,n));
         }
         else {
-            return vf.createIRI(GEO.DEFAULT_SRID);
+            return DEFAULT_CRS;
         }
     }
 
@@ -48,7 +50,7 @@ public final class WktHelpers {
             }
         }
         else {
-            if (crs.equals(GEO.DEFAULT_SRID)) {
+            if (crs.equals(DEFAULT_CRS)) {
                 return wktReader.read(str);
             }
         }

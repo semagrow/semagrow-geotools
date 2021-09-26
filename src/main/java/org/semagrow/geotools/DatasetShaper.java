@@ -53,7 +53,7 @@ public class DatasetShaper {
                 Literal wkt = (Literal) statement.getObject();
                 try {
                     Geometry geometry = WktHelpers.createGeometry(wkt, DEFAULT_SRID);
-                    Geometry new_geom = geometry.buffer(0).intersection(boundary.buffer(0));
+                    Geometry new_geom = geometry.buffer(0).intersection(boundary.buffer(0)).buffer(0);
                     Resource s = statement.getSubject();
                     IRI p = GEO.AS_WKT;
                     Literal o = WktHelpers.createWKTLiteral(new_geom, DEFAULT_SRID);
@@ -76,12 +76,11 @@ public class DatasetShaper {
 
     public static void main(String args[]) throws IOException, ParseException {
 
-        String base = "/home/antru/Documents/xearth/geospatial-selector/";
-        String wDir = base + "poly/";
-        String iDir = base + "datasets/orig/";
-        String oDir = base + "datasets/sh/";
+        String wDir = "/home/antru/Documents/xearth/geospatial-selector/grid/wkt/";
+        String iDir = "/home/antru/Documents/xearth/geospatial-selector/grid/out/";
+        String oDir = "/home/antru/Documents/xearth/geospatial-selector/grid/shd/";
 
-        Geometry[] polygons = new Geometry[9];
+        Geometry[] polygons = new Geometry[7];
         WKTReader reader = new WKTReader();
 
         polygons[0] = reader.read(new FileReader(wDir + "wkt1.txt"));
@@ -91,21 +90,21 @@ public class DatasetShaper {
         polygons[4] = reader.read(new FileReader(wDir + "wkt5.txt"));
         polygons[5] = reader.read(new FileReader(wDir + "wkt6.txt"));
         polygons[6] = reader.read(new FileReader(wDir + "wkt7.txt"));
-        polygons[7] = reader.read(new FileReader(wDir + "wkt8.txt"));
-        polygons[8] = reader.read(new FileReader(wDir + "wkt9.txt"));
+        //polygons[7] = reader.read(new FileReader(wDir + "wkt8.txt"));
+        //polygons[8] = reader.read(new FileReader(wDir + "wkt9.txt"));
 
 
         DatasetShaper shaper = new DatasetShaper();
 
-        shaper.process(iDir + "snow1.nt", oDir + "snow1.nt", polygons[0]);
-        shaper.process(iDir + "snow2.nt", oDir + "snow2.nt", polygons[1]);
-        shaper.process(iDir + "snow3.nt", oDir + "snow3.nt", polygons[2]);
-        shaper.process(iDir + "snow4.nt", oDir + "snow4.nt", polygons[3]);
-        shaper.process(iDir + "snow5.nt", oDir + "snow5.nt", polygons[4]);
-        shaper.process(iDir + "snow6.nt", oDir + "snow6.nt", polygons[5]);
-        shaper.process(iDir + "snow7.nt", oDir + "snow7.nt", polygons[6]);
-        shaper.process(iDir + "snow8.nt", oDir + "snow8.nt", polygons[7]);
-        shaper.process(iDir + "snow9.nt", oDir + "snow9.nt", polygons[8]);
+        shaper.process(iDir + "output.1.nt", oDir + "snow1.nt", polygons[0]);
+        shaper.process(iDir + "output.2.nt", oDir + "snow2.nt", polygons[1]);
+        shaper.process(iDir + "output.3.nt", oDir + "snow3.nt", polygons[2]);
+        shaper.process(iDir + "output.4.nt", oDir + "snow4.nt", polygons[3]);
+        shaper.process(iDir + "output.5.nt", oDir + "snow5.nt", polygons[4]);
+        shaper.process(iDir + "output.6.nt", oDir + "snow6.nt", polygons[5]);
+        shaper.process(iDir + "output.7.nt", oDir + "snow7.nt", polygons[6]);
+        //shaper.process(iDir + "snow8.nt", oDir + "snow8.nt", polygons[7]);
+        //shaper.process(iDir + "snow9.nt", oDir + "snow9.nt", polygons[8]);
 
 
     }
