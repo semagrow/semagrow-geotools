@@ -22,10 +22,10 @@ public class GsynthPBMain {
         Geometry[] polygons = new Geometry[100];
         WKTReader reader = new WKTReader();
 
-        for (int i=0; i<9; i++) {
+        for (int i=0; i<10; i++) {
             polygons[i] = reader.read(new FileReader(wDir + "wkt.0" + i + ".txt"));
         }
-        for (int i=10; i<99; i++) {
+        for (int i=10; i<100; i++) {
             polygons[i] = reader.read(new FileReader(wDir + "wkt." + i + ".txt"));
         }
 
