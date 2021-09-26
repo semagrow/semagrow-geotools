@@ -29,8 +29,8 @@ public class GsynthPBMain {
             polygons[i] = reader.read(new FileReader(wDir + "wkt." + i + ".txt"));
         }
 
-        //split(polygons, "state");
-        //shape(polygons, "state");
+        split(polygons, "state");
+        shape(polygons, "state");
 
         split(polygons, "landOwnership");
         shape(polygons, "landOwnership");
@@ -42,12 +42,12 @@ public class GsynthPBMain {
     static void split(Geometry[] polygons, String kind) throws IOException {
         GsynthDatasetPartitioner partitioner = new GsynthDatasetPartitioner();
         partitioner.setKind(kind);
-        for (int i=0; i<9; i++) {
+        for (int i=0; i<10; i++) {
             String id = "0" + i;
             String filename = kind + ".0" + i + ".nt";
             partitioner.addDatasetPartition(id, polygons[i], tDir + "/" + filename);
         }
-        for (int i=10; i<99; i++) {
+        for (int i=10; i<100; i++) {
             String id = "" + i;
             String filename = kind + "." + i + ".nt";
             partitioner.addDatasetPartition(id, polygons[i], tDir + "/" + filename);
@@ -57,11 +57,11 @@ public class GsynthPBMain {
 
     static void shape(Geometry[] polygons, String kind) throws IOException {
         DatasetShaper shaper = new DatasetShaper();
-        for (int i=0; i<9; i++) {
+        for (int i=0; i<10; i++) {
             String filename = kind + ".0" + i + ".nt";
             shaper.process(tDir + filename, oDir + filename, polygons[i]);
         }
-        for (int i=10; i<99; i++) {
+        for (int i=10; i<100; i++) {
             String filename = kind + "." + i + ".nt";
             shaper.process(tDir + filename, oDir + filename, polygons[i]);
         }
