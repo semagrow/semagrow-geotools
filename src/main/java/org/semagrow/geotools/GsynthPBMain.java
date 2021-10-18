@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class GsynthPBMain {
 
-    static final String path = "/home/antru/Documents/xearth/pb-experiment/512/";
+    static final String path = "/tmp/data/";
 
     static final String iDir = path + "parts/";
     static final String wDir = path + "wkt/";
@@ -30,13 +30,8 @@ public class GsynthPBMain {
         }
 
         split(polygons, "state");
-        shape(polygons, "state");
-
         split(polygons, "landOwnership");
-        shape(polygons, "landOwnership");
-
         split(polygons, "pointOfInterest");
-        shape(polygons, "pointOfInterest");
     }
 
     static void split(Geometry[] polygons, String kind) throws IOException {

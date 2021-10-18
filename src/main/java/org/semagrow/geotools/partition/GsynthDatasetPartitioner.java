@@ -28,6 +28,8 @@ public class GsynthDatasetPartitioner {
     private IRI HAS_GEOMETRY = vf.createIRI("http://www.opengis.net/ont/geosparql#hasGeometry");
     private IRI HAS_TAG = vf.createIRI("http://geographica.di.uoa.gr/ontology/hasTag");
 
+    private double BUFFER_SZ = -3.8;
+
     String base = "http://geographica.di.uoa.gr/generator/";
     String kind = "state/";
 
@@ -69,7 +71,8 @@ public class GsynthDatasetPartitioner {
                 try {
                     Geometry geom = WktHelpers.createGeometry((Literal) statement.getObject(), DEFAULT_SRID);
                     for (DatasetPartition dp: partitions) {
-                        if (dp.getBoundary().intersects(geom)) {
+                        Geometry subset = dp.getBoundary().buffer(BUFFER_SZ);
+                        if (subset.intersects(geom)) {
                             log.info("{} will be placed in {}", statement.getSubject(), dp.getId());
                             dp.addResourceID(getIDfromGeometryIRI((IRI) statement.getSubject()));
                         }
