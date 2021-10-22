@@ -29,6 +29,7 @@ public class GsynthDatasetPartitioner {
     private IRI HAS_TAG = vf.createIRI("http://geographica.di.uoa.gr/ontology/hasTag");
 
     private double BUFFER_SZ = -3.8;
+    private int PARTITION_SZ = 15;
 
     String base = "http://geographica.di.uoa.gr/generator/";
     String kind = "state/";
@@ -181,7 +182,9 @@ public class GsynthDatasetPartitioner {
         }
 
         public void addResourceID(int id) {
-            ResourceIDs.add(id);
+            if (ResourceIDs.size() < PARTITION_SZ) {
+                ResourceIDs.add(id);
+            }
         }
 
         public boolean containsResourceID(int id) {
